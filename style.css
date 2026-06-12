@@ -1,0 +1,1206 @@
+/* ============================================================
+   CONFIGURAÇÕES GLOBAIS
+
+   Define variáveis, cores e estilos básicos utilizados
+   em todas as telas do AgroCode AI.
+
+   Define as cores, variáveis e estilos base utilizados
+   em todas as telas do sistema AgroCode AI.
+   ============================================================ */
+
+:root {
+  --cor-tradicional: #555555;
+  --cor-inteligente: #2e7d32;
+  --cor-texto-grafico: white;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  overflow: hidden;
+  background-color: black;
+}
+
+/* Deixa adaptavel a outros dispositivos */
+@media (max-width: 768px) {
+
+  .video-container-hud,
+  .telemetria-v2 {
+    position: relative;
+    right: 0;
+    top: 0;
+    transform: none;
+    width: 100% !important;
+    margin: 20px 0;
+  }
+
+  .info-irrigacao h2 {
+    font-size: 40px !important;
+    margin-left: 20px;
+  }
+
+  .sidebar-aberta {
+    width: 100%;
+  }
+}
+
+.slide {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.slide.ativo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide button[onclick="voltar()"] {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  padding: 10px 20px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 100;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.slide button[onclick="voltar()"]:hover {
+  background: #1b5e20;
+  transform: scale(1.05);
+}
+
+#simulacao {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('img/fundo4.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: none;
+}
+
+#simulacao.ativo {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.simulacoes {
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 20px;
+  z-index: 1;
+  gap: 20px;
+  justify-content: center;
+  width: 95%;
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.box {
+  background: rgba(0, 0, 0, 0.85) !important;
+  border: 2px solid #2e7d32;
+  border-radius: 20px;
+  padding: 25px;
+  width: 350px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  color: white;
+  box-sizing: border-box;
+}
+
+.box h3 {
+  color: #4caf50 !important;
+  font-size: 22px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.box input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid #2e7d32;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  width: 90%;
+  margin-bottom: 10px;
+}
+
+.box button {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 90%;
+}
+
+.box button:hover {
+  background: #1b5e20;
+}
+
+#relatorio-final {
+  background-image: url('img/fundo7.png');
+}
+
+.painel-final {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.box-resumo,
+.box-envio-final {
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid #2e7d32;
+  border-radius: 20px;
+  padding: 25px;
+  width: 380px;
+  color: white;
+  text-align: left;
+}
+
+.item-resumo {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #4caf50;
+}
+
+.box-resumo ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  color: white;
+}
+
+.box-resumo li {
+  margin-bottom: 15px;
+  font-size: 18px;
+  border-bottom: 1px solid rgba(46, 125, 50, 0.3);
+  padding-bottom: 5px;
+}
+
+#resultado,
+#resultado2,
+#resultadoSmart {
+  margin-top: 15px;
+  color: #00ff00;
+  font-family: monospace;
+  font-size: 14px;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.resultado-estilizado {
+  color: #4caf50 !important;
+  font-size: 20px !important;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+canvas {
+  max-height: 180px !important;
+  margin-top: 20px;
+  filter: drop-shadow(0 0 5px rgba(46, 125, 50, 0.2));
+}
+
+.box p {
+  min-height: 25px;
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   HOME
+
+   Tela principal do sistema responsável por apresentar
+   os módulos disponíveis através de cards interativos.
+   ============================================================ */
+
+#home {
+  background-image: url('img/fundo.png');
+}
+
+.conteudo {
+  position: relative;
+  z-index: 1;
+  color: white;
+}
+
+.conteudo h1 {
+  font-size: 96px;
+  margin: 0;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.cards div {
+  background: #2e7d32;
+  padding: 20px 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+  color: white;
+}
+
+.cards div:hover {
+  background: #1b5e20;
+  transform: translateY(-5px);
+}
+
+/* ============================================================
+   MONITORAMENTO COM DRONES
+
+   Simula a utilização de drones agrícolas para captura
+   de imagens, análise da lavoura e exibição de dados
+   de telemetria em tempo real.
+   ============================================================ */
+
+#drones {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('img/fundo3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100%;
+  display: none;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+  overflow-y: auto;
+}
+
+#drones.ativo {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 40px;
+  padding-left: 80px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+}
+
+.titulo-topo {
+  font-size: 55px !important;
+  letter-spacing: 2px;
+  color: white;
+  text-shadow: 2px 2px 8px #2e7d32;
+  margin: 0 0 30px 0 !important;
+  z-index: 10;
+  width: 100%;
+}
+
+.drone-layout {
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  z-index: 5;
+}
+
+.col-lateral {
+  width: 20%;
+}
+
+.col-central {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.descricao-importancia {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 30px;
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+.descricao-importancia p {
+  color: white;
+  font-size: 22px !important;
+  line-height: 1.6;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.drone-voando {
+  width: 320px !important;
+  height: auto;
+  z-index: 15;
+  margin-bottom: -50px;
+  animation: flutuarDrone 3s ease-in-out infinite;
+  filter: drop-shadow(0 20px 15px rgba(0, 0, 0, 0.7));
+}
+
+.foto-moldura {
+  width: 380px !important;
+  height: 250px;
+  object-fit: cover;
+  border: 6px solid black;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px black;
+  position: absolute;
+  left: 90px;
+  top: 55%;
+  transform: translateY(-50%);
+  z-index: 5;
+}
+
+.container-video-link {
+  width: 320px;
+  margin-top: 15px;
+  background: #1b5e20;
+  border-radius: 0 0 15px 15px;
+  border-left: 4px solid #2e7d32;
+  border: 4px solid black;
+  border-top: none;
+  text-align: center;
+  position: absolute;
+  left: 120px;
+  top: 71%;
+  margin-top: 0px !important;
+  z-index: 10 !important;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.container-video-link p {
+  color: black;
+  font-size: 16px !important;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.btn-video-agro {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 13px;
+  transition: 0.3s;
+}
+
+.btn-video-agro:hover {
+  background: #4caf50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.telemetria-v2 {
+  background: rgba(0, 0, 0, 0.85) !important;
+  padding: 15px 20px;
+  border-radius: 20px;
+  border-right: 6px solid #4caf50;
+  width: fit-content !important;
+  min-width: 250px;
+  position: absolute;
+  right: 40px;
+  top: 55%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.telemetria-v2 div {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 12px;
+  white-space: nowrap;
+}
+
+.telemetria-v2 div span:first-child {
+  font-size: 22px !important;
+  color: #4caf50;
+  margin-right: 10px;
+}
+
+.telemetria-v2 div span:last-child {
+  font-size: 26px !important;
+  font-weight: bold;
+  color: #00ff00 !important;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+}
+
+@keyframes flutuarDrone {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(2deg);
+  }
+}
+
+
+/* ============================================================
+   LOGIN
+
+   Área de autenticação utilizada para validar o acesso
+   do usuário às funcionalidades do sistema.
+   ============================================================ */
+
+.assinatura {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  z-index: 100;
+  color: white !important;
+  font-size: 16px;
+  display: inline-block;
+  padding: 8px 20px;
+}
+
+.assinatura h2 {
+  color: white !important;
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.7);
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 50px;
+  border: 1px solid #2e7d32;
+}
+
+#nome-visitante {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.box-login {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 40px;
+  border-radius: 20px;
+  border: 2px solid #2e7d32;
+  box-shadow: 0 0 20px rgba(46, 125, 50, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+  margin: 0 auto;
+  height: auto !important;
+  padding-bottom: 30px;
+}
+
+.box-login input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #2e7d32;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+}
+
+.box-login input::placeholder {
+  color: #ccc;
+}
+
+.agrobotao {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.agrobotao:hover {
+  background-color: #1b5e20;
+  transform: scale(1.05);
+}
+
+.campo-senha {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.campo-senha input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+#olhinho {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 18px;
+  filter: grayscale(100%);
+  transition: 0.3s;
+}
+
+#olhinho:hover {
+  filter: grayscale(0%);
+  transform: scale(1.2);
+}
+
+@keyframes tremer {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-10px);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+
+  75% {
+    transform: translateX(-10px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.shake {
+  animation: tremer 0.7s ease-in-out !important;
+  border-color: red !important;
+}
+
+/* ============================================================
+   MENU LATERAL (SIDEBAR)
+
+   Responsável pela navegação entre os módulos e telas
+   presentes no projeto.
+   ============================================================ */
+
+#sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(8px);
+  border-right: 1px solid rgba(46, 125, 50, 0.5);
+  z-index: 9999;
+  transition: 0.4s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-fechada {
+  width: 60px;
+}
+
+.sidebar-aberta {
+  width: 260px;
+}
+
+.sidebar-fechada .btn-sair-v2 {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar-aberta .btn-sair-v2 {
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.btn-toggle {
+  background: transparent !important;
+  color: #4caf50;
+  font-size: 28px;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+  width: 60px;
+  text-align: center;
+}
+
+.btn-sair-v2 {
+  background: #1b5e20;
+  color: white;
+  border: none;
+  width: 90%;
+  padding: 10px;
+  margin: 10px auto;
+  display: block;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.conteudo-sidebar {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+}
+
+.links-sidebar div {
+  padding: 15px 20px;
+  color: white !important;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 16px;
+}
+
+.links-sidebar div:hover {
+  background: rgba(46, 125, 50, 0.3);
+  color: #4caf50 !important;
+}
+
+.link-contato {
+  color: #4caf50 !important;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+hr {
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  margin: 10px 15px;
+}
+
+/* ============================================================
+   IRRIGAÇÃO INTELIGENTE
+
+   Demonstra o funcionamento de um sistema automatizado
+   de irrigação baseado em sensores e inteligência artificial.
+   ============================================================ */
+
+#irrigacao {
+  background-image: url('img/fundo5.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+#irrigacao.ativo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 80px;
+  padding-left: 100px;
+}
+
+.overlay-irrigacao {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4) !important;
+  z-index: 1;
+}
+
+.info-irrigacao h2 {
+  font-size: 65px !important;
+  color: white !important;
+  text-shadow: 0 0 15px #2e7d32;
+  position: relative;
+  z-index: 2;
+  margin-left: 80px;
+  margin: 0;
+}
+
+.info-irrigacao p {
+  font-size: 24px !important;
+  color: #4caf50 !important;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+  margin-left: 80px;
+}
+
+.video-container-hud {
+  position: absolute;
+  right: 120px;
+  top: 55%;
+  transform: translateY(-50%);
+  width: 480px;
+  z-index: 100;
+  transition: 0.3s;
+  border: 4px solid #2e7d32;
+  border-radius: 15px;
+  overflow: hidden;
+  background: black;
+}
+
+.hud-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  box-sizing: border-box;
+  font-family: 'Courier New', monospace;
+  color: #051a05;
+  font-size: 18px;
+  text-shadow: 1px 1px 2px black;
+  font-weight: 900;
+}
+
+.hud-top {
+  text-align: right;
+  background: rgba(76, 175, 80, 0.4);
+  padding: 2px 10px;
+  border-radius: 4px;
+  animation: piscar 1.5s infinite;
+}
+
+.hud-bottom {
+  background: rgba(76, 175, 80, 0.4);
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+@keyframes piscar {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.video-monitor {
+  width: 100% !important;
+  height: auto;
+  display: block;
+}
+
+.video-container-hud:hover {
+  transform: translateY(-50%) scale(1.05);
+  border-color: #4caf50;
+}
+
+.btn-smart-irrigacao {
+  margin-left: 80px;
+  margin-top: 30px;
+  width: 380px;
+  background: #2e7d32 !important;
+  backdrop-filter: blur(12px) brightness(1.2);
+  color: white;
+  border: 2px solid rgba(76, 175, 80, 0.8);
+  border-bottom: none;
+  box-sizing: border-box;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 0 0 15px 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-transform: uppercase;
+  display: block;
+  z-index: 10;
+  position: relative;
+}
+
+.btn-smart-irrigacao:hover {
+  background: #4caf50;
+  box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
+}
+
+
+#status-smart {
+  margin-left: 80px;
+  margin-top: 15px;
+  width: 380px;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #4caf50;
+  color: #4caf50 !important;
+  font-family: 'Courier New', monospace;
+  font-size: 15px;
+  line-height: 1.4;
+  box-sizing: border-box;
+  transition: 0.5s ease;
+  display: none;
+}
+
+
+#status-smart.visivel {
+  display: block;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+#status-smart strong {
+  color: white;
+  text-decoration: underline;
+}
+
+
+.card-status-smart {
+  margin-left: 80px;
+  margin-top: 30px;
+  background: rgba(0, 0, 0, 0.75) !important;
+  padding: 25px;
+  border-radius: 15px 15px 0 0;
+  border: 2px solid #2e7d32;
+  border-bottom: none;
+  width: 380px;
+  box-sizing: border-box;
+  backdrop-filter: blur(5px);
+}
+
+.info-irrigacao h2 {
+  text-shadow: 2px 2px 10px black, 0 0 20px #2e7d32 !important;
+}
+
+.info-irrigacao p {
+  text-shadow: 1px 1px 5px black !important;
+}
+
+.linha-status .label {
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.valor-status {
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.pulse-green {
+  color: #4caf50 !important;
+  text-shadow: 0 0 10px #4caf50;
+  animation: piscar-status 2s infinite;
+}
+
+@keyframes piscar-status {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.status-irrigando {
+  color: #42a5f5 !important;
+  text-shadow: 0 0 10px #42a5f5;
+  transition: 0.5s;
+}
+
+/* ============================================================
+   ANÁLISE DE SOLO
+
+   Simula sensores responsáveis por medir nutrientes,
+   pH e condições do solo para auxiliar decisões agrícolas.
+   ============================================================ */
+
+#analise {
+  background-image: url('img/fundo8.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: none;
+}
+
+.overlay-analise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+#analise.ativo {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#analise .titulo-topo,
+.container-analise {
+  position: relative;
+  z-index: 10;
+}
+
+.container-analise {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 90%;
+  margin-top: 20px;
+}
+
+.box-sensores,
+.box-diagnostico {
+  background: rgba(0, 0, 0, 0.85) !important;
+  border: 2px solid #2e7d32;
+  border-radius: 20px;
+  padding: 25px;
+  width: 360px;
+  backdrop-filter: blur(10px);
+  color: white;
+}
+
+.barra-fundo {
+  background: rgba(255, 255, 255, 0.1);
+  height: 12px;
+  border-radius: 10px;
+  margin: 10px 0 20px 0;
+  overflow: hidden;
+}
+
+.progresso {
+  height: 100%;
+  background: linear-gradient(90deg, #2e7d32, #4caf50);
+  box-shadow: 0 0 10px #4caf50;
+  width: 0%;
+  transition: width 1.5s ease-in-out;
+}
+
+.info-sensor {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+#ph-display {
+  font-size: 26px;
+  color: #4caf50;
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+#texto-diagnostico {
+  font-family: 'Courier New', monospace;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #4caf50;
+  min-height: 60px;
+}
+
+/* ============================================================
+   GUIA DE CONHECIMENTO
+
+   Espaço educativo que apresenta informações sobre
+   agricultura, tecnologia e sustentabilidade no campo.
+   ============================================================ */
+
+#conhecimento {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 10, 0, 0.9)), url('img/fundo9.png') !important;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#conhecimento.ativo {
+  display: flex !important;
+}
+
+#conhecimento::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0, 255, 0, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.guia-titulo-cyber {
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 2.8rem;
+  text-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+  margin-bottom: 40px;
+  z-index: 10;
+  text-align: center;
+}
+
+.guia-grid-tecnologica {
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-y: auto;
+  max-height: 70vh;
+  padding: 10px;
+  display: grid !important;
+  grid-template-columns: repeat(2, 350px);
+  gap: 25px;
+  width: auto;
+  z-index: 10;
+}
+
+.guia-card {
+  background: rgba(0, 20, 0, 0.8) !important;
+  border: 1px solid #00ff00;
+  border-radius: 10px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: 0.3s;
+  padding: 25px;
+  min-height: 250px;
+  box-shadow: inset 0 0 15px rgba(0, 255, 0, 0.1);
+}
+
+.guia-txt {
+  font-size: 14px !important;
+  line-height: 1.5;
+  text-align: left;
+  color: white !important;
+  margin: 10px 0;
+}
+
+.guia-link {
+  text-align: center;
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 11px !important;
+  padding: 8px !important;
+}
+
+.guia-link:hover {
+  background: #00ff00;
+  color: black;
+}
+
+.guia-h3 {
+  color: #00ff00 !important;
+  display: block;
+  margin: 10px 0;
+}
+
+/* Responsividade: Se a tela for muito pequena (celular), vira 1 coluna só */
+@media (max-width: 760px) {
+  .guia-grid-tecnologica {
+    grid-template-columns: repeat(1, 300px);
+  }
+}
+
+.guia-btn-voltar {
+  margin-top: 30px;
+  background: transparent !important;
+  color: #00ff00 !important;
+  border: 1px solid #00ff00 !important;
+  padding: 12px 40px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: 0.3s all ease;
+  position: relative;
+  z-index: 100;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+.guia-btn-voltar:hover {
+  background: #00ff00 !important;
+  color: black !important;
+  box-shadow: 0 0 25px #00ff00;
+  transform: scale(1.05);
+}
+
+.guia-btn-voltar::before {
+  content: "> ";
+}
+

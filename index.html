@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>AgroCode</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cloudflare.com"></script>
+  <script src="https://cloudflare.com"></script>
+</head>
+
+<body>
+
+  <!-- SIDEBAR: Coloquei ela em cima de tudo para ficar permanente em todas as section menos no login 
+   mas foi necessário colocar em cima do tal para ficar com a "autoridade" sobre todas as outras 
+   sections. Aqui coloquei todas div para ficar parecido com sites da internet no modelo hamburguer
+   também. Coloquei aqui também um suporte, configurações e um botão de logout/sair.-->
+  <div id="sidebar" class="sidebar-fechada" style="display: none;">
+    <button class="btn-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="conteudo-sidebar">
+      <div class="sidebar-topo">
+        <button class="btn-sair-v2" onclick="logout()">Sair [X]</button>
+      </div>
+      <hr>
+      <div class="links-sidebar">
+        <div onclick="abrir('home')">🏠 Home</div>
+        <hr>
+        <div onclick="abrir('analise')">📊 Análise de Solo</div>
+        <div onclick="abrir('drones')">🚁 Monitoramento</div>
+        <div onclick="abrir('irrigacao')">💧 Irrigação</div>
+        <div onclick="abrir('simulacao')">🌾 Simulador</div>
+        <div onclick="abrir('relatorio-final')">📜 Relatório Final</div>
+        <div onclick="abrir('conhecimento')">📖 Guia AgroTech</div>
+      </div>
+      <hr>
+      <div class="links-sidebar">
+        <div onclick="alert('Configurações...')">⚙️ Configurações</div>
+        <div class="link-contato" onclick="alert('suporte@agrocode.com')">📞 Fale Conosco</div>
+      </div>
+    </div>
+    <!-- Tive que colocar o style aqui porque estava dando interfência com outros códigos no css. -->
+    <div style="padding: 15px; display: flex; flex-direction: column; gap: 8px;">
+      <span style="color: #adadad; font-size: 13px; font-family: monospace;">Acessibilidade:</span>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="mudarFonte(1)"
+          style="background: rgba(76,175,80,0.2); border: 1px solid #4caf50; color: white; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-weight: bold; width: auto;">A+</button>
+        <button onclick="mudarFonte(-1)"
+          style="background: rgba(76,175,80,0.2); border: 1px solid #4caf50; color: white; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-weight: bold; width: auto;">A-</button>
+      </div>
+    </div>
+  </div>
+
+  <!--Aqui por questão de ser o login, aqule que tem que aparecer antes de tudo. Nele se coloca
+   os nomes que se tem no sql e js, o e-mail e a senha quando se cria a conta. Por questões de limitação
+   não pude e não consegui por um sql universal, então fiz utilizando com o sqlite viwer. Futuramente
+   quando ser feito o login terá que colocar o local que vai ser feito todo o processo de irrgação
+   e o número código do drone, mas precisrá somente uma vez. Isso vai terá que ser feito para que o
+   produtor não precise sair de sua casa. -->
+  <section id="login" class="slide ativo">
+    <div class="overlay"></div>
+    <div class="conteudo">
+      <h1>🌱 AgroCode</h1>
+      <p>Autenticação do Sistema</p>
+
+      <div class="box-login">
+        <input type="text" id="usuario" placeholder="Usuário">
+        <input type="email" id="email" placeholder="E-mail de Acesso">
+        <div class="campo-senha">
+          <input type="password" id="senha" placeholder="Senha">
+          <span id="olhinho" onclick="toggleSenha()">👁️</span>
+        </div>
+
+        <button class="agrobotao" onclick="fazerLogin()">Entrar no Sistema</button>
+      </div>
+
+      <p id="erro-login"></p>
+    </div>
+  </section>
+
+  <!--No home fiz uma coisa mais simples, colocando só cards para ficar embaixo do nemo do projeto
+   (AgrCode) e para não depender só da sidebar, mas nos dois tem quase as mesmas coisas, só não 
+   tem aqueles que sitei na sidebar. Adicionei tbm no rodapé os nomes do vistitante e o meu 
+   (desenvolovedor), para caso a pessoa tenha outras contas saber com qual está.-->
+  <section id="home" class="slide">
+    <div class="overlay"></div>
+    <div class="conteudo">
+      <h1>🌱 AgroCode</h1>
+      <p>Do solo ao código</p>
+      <div class="cards">
+        <div onclick="abrir('analise')"> Análise</div>
+        <div onclick="abrir('drones')"> Drones</div>
+        <div onclick="abrir('irrigacao')"> Irrigação</div>
+        <div onclick="abrir('simulacao')"> Simulação</div>
+        <div onclick="abrir('relatorio-final')"> Relatório Final</div>
+        <div onclick="abrir('conhecimento')"> Saiba Mais</div>
+      </div>
+    </div>
+    <div class="assinatura">
+      <h2>Desenvolvedor: Felipe de Andrade | Usuário: <span id="nome-visitante">Nenhum</span></h2>
+    </div>
+  </section>
+
+  <!--Aqui tem a primeira section, que vai ser a análise do solo, no caso o drone vai tirar a foto e 
+   ver se o solo precisa de algum produto para ativar, sendo nitrôgenio, fósforo e potássio. Isso
+   vai ajudar o produtor a não precisar com intensivos(ex:ureia) sem necessidade. -->
+  <section id="analise" class="slide">
+    <div class="overlay-analise"></div>
+    <h2 class="titulo-topo">Laboratório de Solo</h2>
+
+    <div class="container-analise">
+      <div class="box-sensores">
+        <h3>📊 Composição Química</h3>
+        <div class="sensor-bar">
+          <div class="info-sensor"><span>Nitrogênio (N)</span><span id="val-n">0%</span></div>
+          <div class="barra-fundo">
+            <div id="barra-n" class="progresso" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="sensor-bar">
+          <div class="info-sensor"><span>Fósforo (P)</span><span id="val-p">0%</span></div>
+          <div class="barra-fundo">
+            <div id="barra-p" class="progresso" style="width: 0%"></div>
+          </div>
+        </div>
+        <div class="sensor-bar">
+          <div class="info-sensor"><span>Potássio (K)</span><span id="val-k">0%</span></div>
+          <div class="barra-fundo">
+            <div id="barra-k" class="progresso" style="width: 0%"></div>
+          </div>
+        </div>
+        <button class="agrobotao" onclick="gerarNovaAnalise()">Coletar Amostra</button>
+      </div>
+
+      <div class="box-diagnostico">
+        <h3>🧠 Diagnóstico AgroCode</h3>
+        <div id="ph-display">PH DO SOLO: <span id="val-ph">--</span></div>
+        <p id="texto-diagnostico">Inicie a coleta para analisar a saúde da terra.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nesse aqui com o código do drone vai dar pra saber tudo o que precisa, sendo que vai integrar 
+     os dados e fazer com que a telemetria seja feita com base real do drone. Aqui também tem um vídeo
+     referência sobre os drones na agricultura e também commo colocar o código de drones em sites 
+     como o meu. E uma breve descrição da importância de drones nas plantações nos dias de hoje. -->
+
+  <section id="drones" class="slide">
+    <h2 class="titulo-topo">Drones no Agro</h2>
+
+    <div class="drone-layout">
+
+      <div class="col-lateral">
+        <img src="img/drone.png" class="foto-moldura">
+      </div>
+
+      <div class="container-video-link">
+        <p>Este drone está em operação na palestra</p>
+        <a href="https://youtu.be/Pk8N2J0uP1A?si=VFYSIuTRoZ05XHAo" target="_blank">
+          <button class="btn-video-agro">Assistir Palestra ↗</button>
+        </a>
+      </div>
+
+      <div class="col-central">
+        <img src="img/drone-voando.png" class="drone-voando">
+
+        <div class="descricao-importancia">
+          <p>Atualmente, os drones são vitais na agricultura de precisão. Eles reduzem custos em até 30%, permitindo a
+            aplicação localizada de insumos e identificando pragas antes mesmo de serem visíveis a olho nu, garantindo
+            uma colheita mais sustentável e produtiva.</p>
+        </div>
+      </div>
+
+      <div class="col-lateral">
+        <div class="telemetria-v2">
+          <div><span>🛰️ Sinal:</span> <span id="val-sinal">94 %</span></div>
+          <div><span>🔋 Bateria:</span> <span id="val-bateria">85 %</span></div>
+          <div><span>🌡️ Temp:</span> <span id="val-temp">24.5 ºC</span></div>
+          <div><span>📍 Área:</span> <span id="va-área">1.2 ha</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO IRRIGAÇÃO: Interface de monitoramento hídrico. 
+   Aqui temos os indicadores de status do sistema de sensores, a HUD que sobrepõe o vídeo para
+   parecer uma câmera ao vivo que seria o drone sobrevoando toda a plantação. -->
+  <section id="irrigacao" class="slide">
+    <div class="overlay-irrigacao"></div>
+    <div class="conteudo-interno">
+      <div class="info-irrigacao">
+        <h2>Irrigação Inteligente</h2>
+        <p>Gerenciamento hídrico via sensores de solo.</p>
+      </div>
+      <div class="card-status-smart">
+        <div class="linha-status">
+          <span class="label">MODO ATUAL:</span>
+          <span class="valor-status pulse-green">INTELIGENTE</span>
+        </div>
+        <div class="linha-status">
+          <span class="label">SISTEMA:</span>
+          <span class="valor-status">STAND-BY</span>
+        </div>
+        <div class="linha-status">
+          <span class="label">PRÓX. CICLO:</span>
+          <span class="valor-status">AGUARDANDO SENSOR</span>
+        </div>
+      </div>
+      <button class="btn-smart-irrigacao" onclick="Smart()">
+        <span class="icon-power">⏻</span> INICIAR CICLO INTELIGENTE
+      </button>
+      <p id="status-smart"></p>
+      <div class="video-container-hud">
+        <div class="hud-overlay">
+          <div class="hud-top">🟢 LIVE - SETOR 04</div>
+          <div class="hud-bottom">SENSORS: ONLINE | AI: MONITORING</div>
+        </div>
+        <video autoplay loop muted class="video-monitor">
+          <source src="video/irrigacao.mp4" type="video/mp4">
+        </video>
+      </div>
+  </section>
+
+  <!-- SEÇÃO SIMULAÇÃO: Onde ficam as calculadoras e gráficos. 
+   Temos 3 cáculos que são de quantidade gasta de água, o cálculo por hectrare e
+   o AgroCode AI como ajuda principal que é por meio de cálculo rápido implantado com a IA. -->
+  <section id="simulacao" class="slide">
+    <h2 class="titulo-topo">Simulações Inteligentes</h2>
+
+    <div class="simulacoes">
+      <!-- Box 1: Uso de Água -->
+      <div class="box">
+        <h3>Monitor de Consumo</h3>
+        <input type="number" id="umidade" placeholder="Umidade do Solo (%)">
+        <button onclick="simularIA()">Analisar Consumo</button>
+        <div id="painel-agua" class="painel-ia">
+          <p>Status: <span id="status-agua">Aguardando...</span></p>
+          <div id="resultado-agua" class="resultado-display">---</div>
+        </div>
+      </div>
+
+      <!-- Box 2: Volume por Hectare -->
+      <div class="box">
+        <h3>Cálculo de Vazão</h3>
+        <input type="number" id="umidade2" placeholder="Umidade Atual (%)">
+        <button onclick="simularIrrigacaoIA()">Calcular Volume</button>
+        <div id="painel-vazao" class="painel-ia">
+          <p>Status: <span id="status-vazao">Aguardando...</span></p>
+          <div id="resultado-vazao" class="resultado-display">---</div>
+        </div>
+      </div>
+
+      <!-- Box 3: AgroCode AI -->
+      <div class="box">
+        <h3>AgroCode AI</h3>
+        <div class="input-group">
+          <input type="number" id="inputUmidade" placeholder="Solo (%)">
+          <input type="number" id="inputChuva" placeholder="Chuva (%)">
+        </div>
+        <button onclick="executarAgroIA()" class="btn-analisar">Analisar Cenário</button>
+        <div id="painel-ia" class="painel-ia">
+          <p>Status: <span id="ia-status">Aguardando...</span></p>
+          <p>Decisão: <span id="ia-decisao">---</span></p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!--No relatório final, temos meio que um banco de dados de tudo que foi feito durante o login
+   e então é só colocar o e-mail para ser enviado na box do g-mail, issso é para faciltar para o 
+   produtor. Tem uma box dos dados coletados que pode facilitar para o agricutor que não sabe mexer 
+   com a tecnologia, porque ai é só ele iniciar todos os processos e ir direto para o relatório final
+   que irá ver tudo que precisa.-->
+
+  <section id="relatorio-final" class="slide">
+    <div class="overlay"></div>
+    <div class="conteudo-interno">
+      <h2 class="titulo-topo">📋 Relatório de Campo</h2>
+
+      <div class="painel-final">
+        <!-- Resumo Visual -->
+        <div class="box-resumo">
+          <h3>Dados Coletados</h3>
+          <div class="item-resumo"><strong>Solo (NPK):</strong> <span id="res-solo">--</span></div>
+          <div class="item-resumo"><strong>Drone:</strong> <span id="res-drone">--</span></div>
+          <div class="item-resumo"><strong>Irrigação:</strong> <span id="res-irrig">Stand-by</span></div>
+          <div class="item-resumo"><strong>IA AgroCode:</strong> <span id="res-ia">Aguardando...</span></div>
+        </div>
+
+        <!-- Formulário de Envio -->
+        <div class="box-envio-final">
+          <h3>Enviar para o Proprietário</h3>
+          <p>Insira o e-mail para receber o PDF técnico.</p>
+          <input type="email" id="email-final" placeholder="exemplo@fazenda.com.br">
+          <button class="agrobotao" onclick="enviarRelatorioManual()">Despachar Relatório</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--Por fim aqui será o local de apoio sobre tudo o que tem no site, só que sobre os TEMAS que tem 
+   no mesmo.Como eu disse será muito útil para os novos produtores e para os mais velhos que não 
+   entendem de tecnologia e/ou agricultura. É meio que um você sbia de todos os sites.-->
+
+  <section id="conhecimento" class="slide">
+    <div class="guia-overlay"></div>
+    <h2 class="guia-titulo-cyber">SISTEMA DE INFORMAÇÃO: AGRO 4.0</h2>
+
+    <div class="guia-grid-tecnologica">
+
+      <!-- CARD 1: IRRIGAÇÃO (EMBRAPA) -->
+      <div class="guia-card">
+        <div class="guia-scanner"></div>
+        <div class="guia-icon">📡</div>
+        <h3 class="guia-h3">Conectividade Hídrica</h3>
+        <p class="guia-txt">A irrigação inteligente utiliza protocolos de rede para interligar sensores de solo a
+          atuadores de vazão. Através do monitoramento em tempo real, é possível reduzir o consumo de energia e água em
+          até 60%, aplicando a lâmina d'água exata conforme a necessidade da planta.</p>
+        <a href="https://embrapa.br" target="_blank" class="guia-link">Manual de Irrigação (EMBRAPA) ↗</a>
+      </div>
+
+      <!-- CARD 2: DRONES (CANAL AGRO) -->
+      <div class="guia-card">
+        <div class="guia-scanner"></div>
+        <div class="guia-icon">🛰️</div>
+        <h3 class="guia-h3">VANTs e Telemetria</h3>
+        <p class="guia-txt">Veículos Aéreos Não Tripulados processam imagens multiespectrais para gerar mapas de vigor
+          vegetativo (NDVI). Essa tecnologia permite detectar falhas de plantio e focos de pragas com precisão
+          cirúrgica, permitindo uma intervenção localizada muito antes dos sintomas serem visíveis ao olho humano.</p>
+        <a href="https://youtu.be" target="_blank" class="guia-link">Drones na Prática (YouTube) 🎥</a>
+      </div>
+
+      <!-- CARD 3: SOLO (TELEMETRIA BR) -->
+      <div class="guia-card">
+        <div class="guia-scanner"></div>
+        <div class="guia-icon">🧬</div>
+        <h3 class="guia-h3">Bio-Análise Digital</h3>
+        <p class="guia-txt">A análise química digital de NPK (Nitrogênio, Fósforo e Potássio) permite a chamada
+          "Fertirrigação Variável". O produtor recebe um diagnóstico bioquímico individual de cada setor da fazenda,
+          podendo corrigir o solo com os nutrientes exatos, evitando o desperdício de fertilizantes e a contaminação do
+          lençol freático.</p>
+        <a href="https://telemetriabr.com.br" target="_blank" class="guia-link">Blog Telemetria Agrícola 📄</a>
+      </div>
+
+      <!-- CARD 4: IA (AGRO INTELLIGENCE) -->
+      <div class="guia-card">
+        <div class="guia-scanner"></div>
+        <div class="guia-icon">🧠</div>
+        <h3 class="guia-h3">Visão Computacional</h3>
+        <p class="guia-txt">Algoritmos de Deep Learning e Visão Computacional analisam padrões de crescimento e dados
+          meteorológicos históricos para prever a produtividade da safra. A IA AgroCode atua no processamento desses
+          dados para oferecer uma assertividade matemática de até 98% na tomada de decisão sobre o momento ideal de
+          colheita.</p>
+        <a href="https://agrointelligence.com" target="_blank" class="guia-link">Agro Intelligence News ↗</a>
+      </div>
+
+    </div>
+
+    <button class="guia-btn-voltar" onclick="abrir('home')">FINALIZAR CONSULTA [ESC]</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
